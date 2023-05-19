@@ -50,6 +50,6 @@ func NewInMemoryMetricRepository(metric []Metric) *InMemoryMetricRepository {
 	}
 }
 
-func (InMemoryMetricRepository) FindAll() ([]Metric, error) {
+func (InMemoryMetricRepository) FindAll(ctx context.Context) ([]Metric, error) {
 	return []Metric{}, nil
 }

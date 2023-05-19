@@ -1,15 +1,15 @@
 package metrics
 
 import (
-	"github.com/ferminhg/be-dora-metrics/internal/domain"
 	"github.com/gin-gonic/gin"
 	"net/http"
+
+	"github.com/ferminhg/be-dora-metrics/internal/domain"
 )
 
-func FindAllHandler() gin.HandlerFunc {
+func FindAllHandler(metricRepository domain.MetricRepository) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		metricsRepository := domain.NewInMemoryMetricRepository([]domain.Metric{})
-		metrics, err := metricsRepository.FindAll()
+		metrics, err := metricRepository.FindAll(ctx)
 		if err != nil {
 			ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
 			return

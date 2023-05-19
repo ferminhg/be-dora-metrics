@@ -2,6 +2,7 @@ package server
 
 import (
 	"fmt"
+	"github.com/ferminhg/be-dora-metrics/internal/domain"
 	"github.com/ferminhg/be-dora-metrics/internal/platform/server/metrics"
 	"log"
 
@@ -10,14 +11,16 @@ import (
 )
 
 type Server struct {
-	httpAddr string
-	engine   *gin.Engine
+	httpAddr         string
+	engine           *gin.Engine
+	metricRepository domain.MetricRepository
 }
 
-func New(host string, port uint) Server {
+func New(host string, port uint, metricRepository domain.MetricRepository) Server {
 	srv := Server{
-		engine:   gin.New(),
-		httpAddr: fmt.Sprintf("%s:%d", host, port),
+		engine:           gin.New(),
+		httpAddr:         fmt.Sprintf("%s:%d", host, port),
+		metricRepository: metricRepository,
 	}
 
 	srv.registerRoutes()
@@ -31,5 +34,5 @@ func (s *Server) Run() error {
 
 func (s *Server) registerRoutes() {
 	s.engine.GET("/health", health.CheckHandler())
-	s.engine.GET("/metrics", metrics.FindAllHandler())
+	s.engine.GET("/metrics", metrics.FindAllHandler(s.metricRepository))
 }

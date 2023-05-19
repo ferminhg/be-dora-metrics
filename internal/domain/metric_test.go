@@ -1,6 +1,7 @@
 package domain
 
 import (
+	"context"
 	"testing"
 	"time"
 
@@ -35,7 +36,7 @@ func TestNewMetric(t *testing.T) {
 func TestMetricRepository(t *testing.T) {
 	var emptyMetric []Metric
 	repository := NewInMemoryMetricRepository(emptyMetric)
-	results, error := repository.FindAll()
+	results, error := repository.FindAll(context.Background())
 	if error != nil {
 		t.Errorf("error in FindAll: %s", error.Error())
 	}

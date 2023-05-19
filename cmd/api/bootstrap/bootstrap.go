@@ -1,6 +1,9 @@
 package bootstrap
 
-import "github.com/ferminhg/be-dora-metrics/internal/platform/server"
+import (
+	"github.com/ferminhg/be-dora-metrics/internal/domain"
+	"github.com/ferminhg/be-dora-metrics/internal/platform/server"
+)
 
 const (
 	host = "localhost"
@@ -8,6 +11,7 @@ const (
 )
 
 func Run() error {
-	srv := server.New(host, port)
+	metricRepository := domain.NewInMemoryMetricRepository([]domain.Metric{})
+	srv := server.New(host, port, metricRepository)
 	return srv.Run()
 }
