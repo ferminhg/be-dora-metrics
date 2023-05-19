@@ -2,9 +2,10 @@ package server
 
 import (
 	"fmt"
+	"log"
+
 	"github.com/ferminhg/be-dora-metrics/internal/platform/server/health"
 	"github.com/gin-gonic/gin"
-	"log"
 )
 
 type Server struct {

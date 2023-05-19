@@ -1,8 +1,9 @@
 package main
 
 import (
-	"github.com/ferminhg/be-dora-metrics/cmd/api/bootstrap"
 	"log"
+
+	"github.com/ferminhg/be-dora-metrics/cmd/api/bootstrap"
 )
 
 func main() {
