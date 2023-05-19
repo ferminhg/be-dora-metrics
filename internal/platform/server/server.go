@@ -2,6 +2,7 @@ package server
 
 import (
 	"fmt"
+	"github.com/ferminhg/be-dora-metrics/internal/platform/server/metrics"
 	"log"
 
 	"github.com/ferminhg/be-dora-metrics/internal/platform/server/health"
@@ -30,4 +31,5 @@ func (s *Server) Run() error {
 
 func (s *Server) registerRoutes() {
 	s.engine.GET("/health", health.CheckHandler())
+	s.engine.GET("/metrics", metrics.FindAllHandler())
 }
