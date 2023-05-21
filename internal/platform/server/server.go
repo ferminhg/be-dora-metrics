@@ -2,12 +2,12 @@ package server
 
 import (
 	"fmt"
-	"github.com/ferminhg/be-dora-metrics/internal/domain"
-	"github.com/ferminhg/be-dora-metrics/internal/platform/server/metrics"
+	"github.com/gin-gonic/gin"
 	"log"
 
+	"github.com/ferminhg/be-dora-metrics/internal/domain"
 	"github.com/ferminhg/be-dora-metrics/internal/platform/server/health"
-	"github.com/gin-gonic/gin"
+	"github.com/ferminhg/be-dora-metrics/internal/platform/server/metrics"
 )
 
 type Server struct {
