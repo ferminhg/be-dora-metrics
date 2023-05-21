@@ -26,8 +26,8 @@ func NewMetricID() metricID {
 	return metricID{Value: gen.New().String()}
 }
 
-func (id metricID) String() string {
-	return id.Value
+func (m metricID) String() string {
+	return m.Value
 }
 
 type Metric struct {
@@ -48,20 +48,4 @@ func NewMetric(name string, value float64, timestamp time.Time) Metric {
 
 type MetricRepository interface {
 	FindAll(ctx context.Context) ([]Metric, error)
-}
-
-const NUM_RANDOM_METRICS = 50
-
-type InMemoryMetricRepository struct {
-	metric []Metric
-}
-
-func NewInMemoryMetricRepository(metric []Metric) *InMemoryMetricRepository {
-	return &InMemoryMetricRepository{
-		metric: metric,
-	}
-}
-
-func (r InMemoryMetricRepository) FindAll(ctx context.Context) ([]Metric, error) {
-	return r.metric, nil
 }
