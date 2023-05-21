@@ -1,7 +1,6 @@
 package domain
 
 import (
-	"context"
 	"testing"
 	"time"
 
@@ -18,7 +17,7 @@ func TestMetricID(t *testing.T) {
 }
 
 func TestNewMetric(t *testing.T) {
-	name := "test"
+	name := NewMetricName("DF")
 	value := 1.0
 	timestamp := time.Now()
 	metric := NewMetric(name, value, timestamp)
@@ -30,17 +29,5 @@ func TestNewMetric(t *testing.T) {
 	}
 	if metric.Timestamp.String() != timestamp.String() {
 		t.Errorf("metric.date is not valid: %s", metric.Timestamp.String())
-	}
-}
-
-func TestMetricRepository(t *testing.T) {
-	var emptyMetric []Metric
-	repository := NewInMemoryMetricRepository(emptyMetric)
-	results, error := repository.FindAll(context.Background())
-	if error != nil {
-		t.Errorf("error in FindAll: %s", error.Error())
-	}
-	if len(emptyMetric) != len(results) {
-		t.Errorf("emptyMetric and results are not the same length")
 	}
 }

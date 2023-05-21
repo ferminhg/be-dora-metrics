@@ -12,7 +12,7 @@ type metricID struct {
 	Value string
 }
 
-// Added to return custom json on marshal metricID
+// FYI: Added to return custom json on marshal metricID
 func (m metricID) MarshalJSON() ([]byte, error) {
 	return json.Marshal(m.Value)
 }
@@ -30,14 +30,38 @@ func (m metricID) String() string {
 	return m.Value
 }
 
-type Metric struct {
-	ID        metricID  `json:"id"`
-	Name      string    `json:"name"`
-	Value     float64   `json:"value"`
-	Timestamp time.Time `json:"timestamp"`
+type MetricName string
+
+const (
+	DF      MetricName = "DF"
+	LTFC               = "LTFC"
+	CFR                = "CFR"
+	TTRS               = "TTRS"
+	Unknown            = "Unknown"
+)
+
+var validNames = map[MetricName]bool{
+	DF:   true,
+	LTFC: true,
+	CFR:  true,
+	TTRS: true,
 }
 
-func NewMetric(name string, value float64, timestamp time.Time) Metric {
+func NewMetricName(name string) MetricName {
+	if _, ok := validNames[MetricName(name)]; !ok {
+		return Unknown
+	}
+	return MetricName(name)
+}
+
+type Metric struct {
+	ID        metricID   `json:"id"`
+	Name      MetricName `json:"name"`
+	Value     float64    `json:"value"`
+	Timestamp time.Time  `json:"timestamp"`
+}
+
+func NewMetric(name MetricName, value float64, timestamp time.Time) Metric {
 	return Metric{
 		ID:        NewMetricID(),
 		Name:      name,
