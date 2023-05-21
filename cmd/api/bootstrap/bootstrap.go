@@ -3,6 +3,7 @@ package bootstrap
 import (
 	"github.com/ferminhg/be-dora-metrics/internal/domain"
 	"github.com/ferminhg/be-dora-metrics/internal/platform/server"
+	"math/rand"
 	"time"
 )
 
@@ -12,13 +13,18 @@ const (
 )
 
 func Run() error {
-	metrics := []domain.Metric{
-		domain.NewMetric("tc", 0.5, time.Now()),
-		domain.NewMetric("tc", 0.4, time.Now()),
-		domain.NewMetric("tc", 0.6, time.Now()),
-		domain.NewMetric("tc", 0.3, time.Now()),
-		domain.NewMetric("tc", 0.7, time.Now()),
+	n := domain.NUM_RANDOM_METRICS // Replace with the number of times you want to repeat
+	metrics := make([]domain.Metric, n)
+	s := rand.NewSource(time.Now().UnixNano())
+	r := rand.New(s)
+
+	min := 10.0
+	max := 20.0
+	for i := 0; i < n; i++ {
+		randomFloat := min + r.Float64()*(max-min)
+		metrics[i] = domain.NewMetric("tc", randomFloat, time.Now())
 	}
+
 	metricRepository := domain.NewInMemoryMetricRepository(metrics)
 	srv := server.New(host, port, metricRepository)
 	return srv.Run()

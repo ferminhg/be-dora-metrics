@@ -11,9 +11,9 @@ import (
 func TestMetricID(t *testing.T) {
 	id := NewMetricID()
 	gen := &shared.GoogleUUIDGenerator{}
-	_, error := gen.Parse(id.value)
+	_, error := gen.Parse(id.Value)
 	if error != nil {
-		t.Errorf("metricID.value is not valid UUID: %s", id.value)
+		t.Errorf("metricID.value is not valid UUID: %s", id.Value)
 	}
 }
 
@@ -22,14 +22,14 @@ func TestNewMetric(t *testing.T) {
 	value := 1.0
 	timestamp := time.Now()
 	metric := NewMetric(name, value, timestamp)
-	if metric.name != name {
-		t.Errorf("metric.name is not valid: %s", metric.name)
+	if metric.Name != name {
+		t.Errorf("metric.name is not valid: %s", metric.Name)
 	}
-	if metric.value != value {
-		t.Errorf("metric.value is not valid: %f", metric.value)
+	if metric.Value != value {
+		t.Errorf("metric.value is not valid: %f", metric.Value)
 	}
-	if metric.timestamp.String() != timestamp.String() {
-		t.Errorf("metric.date is not valid: %s", metric.timestamp.String())
+	if metric.Timestamp.String() != timestamp.String() {
+		t.Errorf("metric.date is not valid: %s", metric.Timestamp.String())
 	}
 }
 
